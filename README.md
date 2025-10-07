@@ -18,4 +18,4 @@ Ideal als Einstieg oder Grundlage für eigene Discord-Bots mit Java 22.
 - Maven oder Gradle
 - Ein Discord-Bot mit aktiviertem Privileged Gateway Intent `GUILD_MEMBERS`
 - Ein Server, auf dem der Bot die Berechtigungen `Kick Members` und `Ban Members` besitzt
-- Slash Command muss selber im Bot registriert werden
+- Slash Commands muss man selbstständig im Bot registrieren
