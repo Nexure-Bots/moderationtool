@@ -1,2 +1,2 @@
 # moderationtool
-Ein kompakter JDA-Snippet mit den grundlegenden Moderationsbefehlen: Kick, Ban und Warn
+Ein JDA-Snippet mit den grundlegenden Moderationsbefehlen: Kick und Ban
