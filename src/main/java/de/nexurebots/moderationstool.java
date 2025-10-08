@@ -27,6 +27,11 @@ public class moderationstool extends ListenerAdapter {
                 if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
                     Member member = event.getOption("user").getAsMember();
 
+                    if (member.getUser().isBot()) {
+                        event.reply("`❌` » Du kannst keine Bots bannen!").setEphemeral(true).queue();
+                        return;
+                    }
+
                     member.ban(7, TimeUnit.DAYS).queue();
                     event.reply("`✅` » " + member.getAsMention() + " wurde Erfolgreich vom Server gebannt!").setEphemeral(true).queue();
                 } else {
@@ -36,6 +41,11 @@ public class moderationstool extends ListenerAdapter {
             case "kick" -> {
                 if (event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
                     Member member = event.getOption("user").getAsMember();
+
+                    if (member.getUser().isBot()) {
+                        event.reply("`❌` » Du kannst keine Bots kicken!").setEphemeral(true).queue();
+                        return;
+                    }
 
                     member.kick().queue();
                     event.reply("`✅` » " + member.getAsMention() + " wurde Erfolgreich vom Server gekickt!").setEphemeral(true).queue();
