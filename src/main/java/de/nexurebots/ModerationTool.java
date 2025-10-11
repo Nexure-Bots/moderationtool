@@ -13,12 +13,14 @@ Made by Nexure Bots - dsc.gg/nexure-bots
 
 package de.nexurebots;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 public class ModerationTool extends ListenerAdapter {
@@ -27,6 +29,8 @@ public class ModerationTool extends ListenerAdapter {
     private static final String CANNOT_ACTION_BOT = "`❌` » Du kannst keine Bots moderieren!";
     private static final String USER_NOT_FOUND = "`❌` » Der angegebene Nutzer konnte nicht gefunden werden!";
     private static final String MISSING_BOT_PERMISSIONS = "`❌` » Der Bot hat nicht die nötigen Rechte, um das zu tun!";
+
+    private static final String LOG_CHANNEL_ID = "DEINE_LOG_CHANNEL_ID";
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
@@ -61,6 +65,16 @@ public class ModerationTool extends ListenerAdapter {
                                 success -> event.reply("`✅` » " + target.getAsMention() + " wurde erfolgreich gebannt. Grund: `" + reason + "`").setEphemeral(true).queue(),
                                 error -> event.reply("`❌` » Fehler beim Bannen: `" + error.getMessage() + "`").setEphemeral(true).queue()
                         );
+
+                EmbedBuilder BanLog = new EmbedBuilder()
+                        .setColor(Color.red)
+                        .setDescription("## Ban Log \n" +
+                                "> Es wurde gerade ein Mitglied vom Server gebannt! \n" +
+                                "> - **gebanntes Mitglied:** " + target.getAsMention() + " \n" +
+                                "> - **Moderator:** " + event.getMember().getAsMention())
+                        .setFooter("Moderationtool by Nexure Bots");
+
+                event.getGuild().getTextChannelById(LOG_CHANNEL_ID).sendMessageEmbeds(BanLog.build()).queue();
             }
 
             case "kick" -> {
@@ -92,6 +106,16 @@ public class ModerationTool extends ListenerAdapter {
                                 success -> event.reply("`✅` » " + target.getAsMention() + " wurde erfolgreich gekickt. Grund: `" + reason + "`").setEphemeral(true).queue(),
                                 error -> event.reply("`❌` » Fehler beim Kicken: `" + error.getMessage() + "`").setEphemeral(true).queue()
                         );
+
+                EmbedBuilder KickLog = new EmbedBuilder()
+                        .setColor(Color.red)
+                        .setDescription("## Kick Log \n" +
+                                "> Es wurde gerade ein Mitglied vom Server gekickt! \n" +
+                                "> - **gekicktes Mitglied:** " + target.getAsMention() + " \n" +
+                                "> - **Moderator:** " + event.getMember().getAsMention())
+                        .setFooter("Moderationtool by Nexure Bots");
+
+                event.getGuild().getTextChannelById(LOG_CHANNEL_ID).sendMessageEmbeds(KickLog.build()).queue();
             }
         }
     }
